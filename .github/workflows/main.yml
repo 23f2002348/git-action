@@ -1,15 +1,27 @@
-name: 23f2002348@ds.study.iitm.ac.in
+name: Daily Commit
+
 on:
-  push:
-    branches:
-      - main
   schedule:
-    - cron: '0 8 * * * git commit -m "Sample" >/dev/null 2>&1'
+    # Runs every day at 04:20 UTC
+    - cron: '20 4 * * *'
+  workflow_dispatch:  # for manual testing
+
 jobs:
-  build:
+  commit:
     runs-on: ubuntu-latest
+
     steps:
-    - uses: actions/checkout@v1
-    - name: Running
-      run: |
-        echo "Running!"
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Make a dummy change
+        run: |
+          date > timestamp.txt
+
+      - name: Commit and push - 23f2002348@ds.study.iitm.ac.in
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add timestamp.txt
+          git commit -m "Automated daily commit"
+          git push
