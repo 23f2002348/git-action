@@ -4,7 +4,7 @@ on:
     branches:
       - main
   schedule:
-    - cron: '0 8 1 * *'
+    - cron: '0 8 * * * git commit -m "Sample" >/dev/null 2>&1'
 jobs:
   build:
     runs-on: ubuntu-latest
